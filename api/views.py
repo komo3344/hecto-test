@@ -4,9 +4,11 @@ from rest_framework.response import Response
 
 class V1API(APIView):
     def get(self, request):
-        return Response({'msg': 'v1 api'})
+        return Response(
+            {'msg': 'v1 api test!'}
+        )
 
 
 class V2API(APIView):
     def get(self, request):
-        return Response({'msg': 'v2 api'})
+        return Response({'msg': 'v2 api test!'})
