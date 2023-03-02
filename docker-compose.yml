@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  web:
+    build:
+      context: .
+    volumes:
+      - ./static:/app/static
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+      - ./static:/static
+    depends_on:
+      - web
+
+  db:
+    image: mysql:8
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${NAME}
+      - MYSQL_USER=${USER}
+      - MYSQL_PASSWORD=${PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql/
+
+volumes:
+  mysql_data:
