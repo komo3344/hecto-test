@@ -5,20 +5,21 @@ services:
     build:
       context: .
     volumes:
-      - ./static:/app/static
+      - static_data:/app/static
+      - ./:/app/
     ports:
       - "8000:8000"
     env_file:
       - .env
 
   nginx:
-    image: nginx:latest
+#    image: nginx:latest
+    build: ./nginx
     restart: always
     ports:
       - "80:80"
     volumes:
-      - ./nginx:/etc/nginx/conf.d
-      - ./static:/static
+      - static_data:/app/static
     depends_on:
       - web
 
@@ -35,3 +36,4 @@ services:
 
 volumes:
   mysql_data:
+  static_data:
